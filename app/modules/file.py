@@ -59,7 +59,7 @@ class Kb_Import:
             chunk_dicts.append({
                 "text": chunk,
                 "metadata": {
-                    "chunk_id": str(i),
+                    "chunk_id": f"{file_id}_{i}",
                     "source_file": file_name,
                     "file_id": file_id
                 }
@@ -67,7 +67,7 @@ class Kb_Import:
 
         return chunk_dicts
 
-    async def create_embed_and_store(self, chunks, batch_size=10):
+    async def create_embed_and_store(self, chunks, batch_size=15):
         for i in range(0, len(chunks), batch_size):
             batch = chunks[i:i+batch_size]
             logging.info(f"Starting batch {i // batch_size + 1} with {len(batch)} chunks")

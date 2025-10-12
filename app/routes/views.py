@@ -1,6 +1,6 @@
 import os
 import time
-from fastapi import APIRouter, UploadFile, File, Body
+from fastapi import APIRouter, UploadFile, File, Body, HTTPException
 from app.modules.file import Kb_Import
 from app.modules.query import Query
 router = APIRouter()
@@ -14,6 +14,8 @@ def health_check():
 
 @router.post("/add-file-import")
 async def add_file_import(file: UploadFile = File(...)):
+    if not file or not file.filename:
+        raise HTTPException(status_code=400, detail="No file uploaded")
     try:
         filename, ext = os.path.splitext(file.filename)
 
