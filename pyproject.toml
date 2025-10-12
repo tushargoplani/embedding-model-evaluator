@@ -1,5 +1,5 @@
 [project]
-name = "sifthub-assignment"
+name = "embedding-model-evaluator"
 version = "1.0.0"
 description = "An assignment"
 authors = []
