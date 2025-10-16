@@ -17,7 +17,7 @@ def format_chroma_results(results):
         combined.append({
             "text": documents[i],
             "metadata": metadatas[i],
-            "score": distances[i]
+            "score": 1 - distances[i] # Convert distance to similarity
         })
     combined = sorted(combined, key=lambda x: x["score"], reverse=True)
     

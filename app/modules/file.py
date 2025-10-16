@@ -90,12 +90,7 @@ class Kb_Import:
     def create_embed_with_sentence_transformer_and_store(self, data_for_chroma):
         model = SentenceTransformer("all-MiniLM-L6-v2")
         hf_db = client.get_or_create_collection("huggingface_embeddings", 
-            configuration={
-                "hnsw": {
-                    "space": "cosine",
-                    "ef_construction": 200
-                }
-            }
+            metadata={"hnsw:space": "cosine"}
         )
         embeddings = model.encode(data_for_chroma["documents"])
         # L2-normalize each embedding vector
@@ -113,12 +108,7 @@ class Kb_Import:
 
     def create_embed_with_cohere_and_store(self, data_for_chroma):
         cohere_db = client.get_or_create_collection("cohere_embeddings", 
-            configuration={
-                "hnsw": {
-                    "space": "cosine",
-                    "ef_construction": 200
-                }
-            }
+            metadata={"hnsw:space": "cosine"}
         )
 
         response = cohere_client.embed(
@@ -139,12 +129,7 @@ class Kb_Import:
 
     def create_embed_with_voyage_and_store(self, data_for_chroma):
         voyage_db = client.get_or_create_collection("voyage_embeddings", 
-            configuration={
-                "hnsw": {
-                    "space": "cosine",
-                    "ef_construction": 200
-                }
-            }
+            metadata={"hnsw:space": "cosine"}
         )
         result = voyage_client.embed(
             data_for_chroma["documents"], 

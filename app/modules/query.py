@@ -112,12 +112,7 @@ class Query:
     def get_context_from_sentence_transformer(self, query, top_k, file_ids):
         model = SentenceTransformer("all-MiniLM-L6-v2")
         hf_db = client.get_or_create_collection("huggingface_embeddings", 
-            configuration={
-                "hnsw": {
-                    "space": "cosine",
-                    "ef_construction": 200
-                }
-            }
+            metadata={"hnsw:space": "cosine"}
         )
         print("hf_db ", hf_db)
         query_emb = model.encode(query)
@@ -134,12 +129,7 @@ class Query:
 
     def get_context_from_cohere(self, query, top_k, file_ids):
         cohere_db = client.get_or_create_collection("cohere_embeddings", 
-            configuration={
-                "hnsw": {
-                    "space": "cosine",
-                    "ef_construction": 200
-                }
-            }
+            metadata={"hnsw:space": "cosine"}
         )
         response = cohere_client.embed(
             model="embed-v4.0",
@@ -160,12 +150,7 @@ class Query:
 
     def get_context_from_voyage(self, query, top_k, file_ids):
         voyage_db = client.get_or_create_collection("voyage_embeddings", 
-            configuration={
-                "hnsw": {
-                    "space": "cosine",
-                    "ef_construction": 200
-                }
-            }
+            metadata={"hnsw:space": "cosine"}
         )
         response = voyage_client.embed([query], model="voyage-3.5", input_type="document")
         query_emb = response.embeddings[0]
